@@ -36,3 +36,7 @@ python manage.py runserver [IP:PORT]
 ```
 
 6. Ensure that your `keys.py` files have the base URL and port for the development server.
+
+### Notes
+
+This is a public version of my own personal project. DinnerDate is for personal use ONLY.
