@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-7" style="margin-bottom: 0rem!important; padding-right: 0;padding-left: 0;">
+        <div class="card mb-3 main-content-container">
+            <div class="header-image-container">
+              <img src="{{photo}}" class="header-image" alt="" style="border-radius: 10px;">
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">{{ name }}</h2>
+                <svg style="display:none;">
+                    <defs>
+                        <symbol id="fivestars">
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(24)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(48)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(72)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd"  transform="translate(96)"/>
+                        </symbol>
+                    </defs>
+                </svg>
+                <div class="rating">
+                <!--   <div class="rating-bg" style="width: 90%;"></div> -->
+                    <progress class="rating-bg" value="{{ rating }}" max="5"></progress>
+                    <svg><use xlink:href="#fivestars"/></svg>
+                </div>
+                <p class="card-text">{{ categories }}
+                        <br>
+                        <b>Pricing:</b> {{ price }}
+                        <br>
+                        <b>Address:</b> {{ address }}
+                        <br>
+                        <b>Phone:</b> {{ phone }}
+                        <br>
+                </p>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <form method="GET" action="{% url 'picker' %}">
+                            <input type="hidden" value="y" name="response">
+                            <input type="hidden" value="{{person}}" name="person">
+                            <input type="hidden" value="{{id}}" name="id">
+                            <input type="hidden" value="{{item}}" name="item">
+                            <input type="hidden" value="{{session_id}}" name="session">
+                            <button type="submit" class="btn btn-success"><i class="bi bi-check-lg"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <form method="GET" action="{% url 'picker' %}">
+                            <input type="hidden" value="n" name="response">
+                            <input type="hidden" value="{{person}}" name="person">
+                            <input type="hidden" value="{{id}}" name="id">
+                            <input type="hidden" value="{{item}}" name="item">
+                            <input type="hidden" value="{{session_id}}" name="session">
+                            <button type="submit" class="btn btn-danger" style="float: right;"><i class="bi bi-x-lg"></i></button>
+                        </form>
+                    </div>
+                    <br>
+                </div>
+                <br>
+                <p class="card-text"><small class="text-body-secondary">Images and data provided by Yelp</small></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 main-content-container" style="padding:10px; margin-bottom: 1rem!important;">
+        <h4>Matches:</h4>
+        <p>
+        
+            {% for i in matches %}
+            <div style="padding:5px;">
+                <a href="http://test.austinstowe.org:6864/location/?location={{ i.id }}&session={{ session_id }}" class="btn btn-outline-secondary" style="width:100%;">{{i.title}}</a> 
+            </div>
+            {% endfor %}
+        
+        </p>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 main-content-container">
+        <h4>Room Code: {{ session_id }}</h4>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+{% endblock %}

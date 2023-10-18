@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<form action="{% url 'index' %}" method="POST">
+    {% csrf_token %}
+    <label for="user" class="form-label">User</label>
+    <select class="form-select" aria-label="Default select example" name="user" id="user">
+        <option value="josey">Josey</option>
+        <option value="austin">Austin</option>
+    </select>
+    <br><br>
+    <label for="time" class="form-label">Time</label>
+    <select class="form-select" aria-label="Default select example" name="time" id="time">
+        <option value="day">Any Time</option>
+        <option value="late">After 10</option>
+    </select>
+    <br><br>
+    <button type="submit" class="btn btn-primary">Start</button>
+</form>
+{% endblock %}

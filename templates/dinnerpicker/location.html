@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-7" style="margin-bottom: 0rem!important; padding-right: 0;padding-left: 0;">
+        <div class="card mb-3 main-content-container">
+            <div class="header-image-container">
+              <img src="{{photo}}" class="header-image" alt="" style="border-radius: 10px;">
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">{{ name }}</h2>
+                <svg style="display:none;">
+                    <defs>
+                        <symbol id="fivestars">
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(24)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(48)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd" transform="translate(72)"/>
+                            <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z M0 0 h24 v24 h-24 v-24" fill="white" fill-rule="evenodd"  transform="translate(96)"/>
+                        </symbol>
+                    </defs>
+                </svg>
+                <div class="rating">
+                <!--   <div class="rating-bg" style="width: 90%;"></div> -->
+                    <progress class="rating-bg" value="{{ rating }}" max="5"></progress>
+                    <svg><use xlink:href="#fivestars"/></svg>
+                </div>
+                <p class="card-text">{{ categories }}
+                        <br>
+                        <b>Pricing:</b> {{ price }}
+                        <br>
+                        <b>Address:</b> {{ address }}
+                        <br>
+                        <b>Phone:</b> {{ phone }}
+                        <br>
+                </p>
+                <!--<a href="{{ returnUrl }}" class="btn btn-primary">Back</a>-->
+                <br>
+                <p class="card-text"><small class="text-body-secondary">Images and data provided by Yelp</small></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4 main-content-container" style="padding:10px; margin-bottom: 1rem!important;">
+        <h4>Matches:</h4>
+        <p>
+        
+            {% for i in matches %}
+            <div style="padding:5px;">
+                <a href="http://test.austinstowe.org:6864/location/?location={{ i.id }}&session={{ session_id }}" class="btn btn-outline-secondary" style="width:100%;">{{i.title}}</a> 
+            </div>
+            
+            {% endfor %}
+        
+        </p>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 main-content-container">
+        <h4>Room Code: {{ session_id }}</h4>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<div id="modal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Out of restaurants</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ modalText }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {% if modalMatches == False %}
+                <a class="btn btn-secondary" href="http://test.austinstowe.org:6864/location/?session={{session_id}}">Refresh</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+
+{% if modal == True %}
+<script>
+    $(document).ready(function() {
+      $('#modal').modal('show');
+    });
+</script>
+{% endif %}
+
+{% endblock %}

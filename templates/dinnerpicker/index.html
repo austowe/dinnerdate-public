@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 main-content-container">
+        <div class="alert alert-danger" role="alert">
+            The site is currently under maintenance and will likely not work as intended.
+        </div>
+        <form action="{% url 'index' %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="zip" class="form-label">Enter your ZIP code</label>
+                    <input type="number" class="form-control" id="zip" name="zip" aria-describedby="zipHelp" required>
+                    <div id="zipHelp" class="form-text">Only valid US ZIP codes accepted.</div>
+                    <br>
+                </div>
+                <br>
+                <div class="col-md-6">
+                    <label for="type" class="form-label">Restaurant Type Preference</label>
+                    <select class="form-select" aria-label="Default select example" name="type" id="type" aria-describedby="typeHelp" required>
+                        <option value="fast food">Fast Food</option>
+                        <option value="dine-in restaurant">Dine-In</option>
+                        <option value="bars">Bars</option>
+                        <option value="food">Any</option>
+                    </select>
+                    <div id="typeHelp" class="form-text">The restaurant style, dine-in or fast food.</div>
+                    <br>
+                </div>
+                <br>
+            </div>
+            <div class="row">
+                <label for="distance" class="form-label">Max distance</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="number" class="form-control" id="distance" name="distance" aria-describedby="distanceHelp" required min="0.1" max="24" step=".1">
+                    <div id="distanceHelp" class="form-text">Max distance from ZIP code in miles up to 24</div>
+                    <br>
+                    <br>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-check form-switch" style="vertical-align: bottom;">
+                                <input class="form-check-input" type="checkbox" role="switch" id="opennow" style="height: 25px; width: 50px;">
+                                <label class="form-check-label" for="opennow" value="now" name="opennow" style="padding: 5px 5px;">Open Now</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary" style="width:100%;">Start new Session</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--ADD SOMETHING FOR DISTANCE, PRICE RANGE, SORTING-->
+            <br>
+                <!--<label for="time" class="form-label">Time</label>
+                <select class="form-select" aria-label="Default select example" name="time" id="time">
+                    <option value="day">Any Time</option>
+                    <option value="late">After 10</option>
+                </select>
+                <br><br>-->
+        </form>
+        <br><br>
+        <form action="{% url 'picker' %}" method="GET">
+            <label for="session" class="form-label">Room Code</label>
+            <div class="row">
+                <div class="col-7">
+                    <input type="text" class="form-control" id="session" name="session" required aria-describedby="sessionHelp">
+                    <div id="sessionHelp" class="form-text">Enter a room code to join</div>
+                    <br>
+                </div>
+                <div class="col">
+                    <input type="hidden" name="item" id="item" value="0">
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Join Session</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

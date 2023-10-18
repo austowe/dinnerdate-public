@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 main-content-container">
+    <h4>Room Code: {{ session }}</h4>
+    <br>
+    <br>
+    <input type="text" value="{{join_url}}" id="url" disabled style="display:none;">
+    <button onclick="copyLink()" class="btn btn-primary">Click to copy share link</button>
+    <!--<button id="share-btn" onclick="mobileShare()">Share!</button>-->
+    <br><br>
+    <a class="btn btn-primary" href="{{ url }}">Join Room</a>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+
+<script>
+    function copyLink() {
+      const text = document.getElementById('url').value;
+
+      // Create a temporary element to hold the text
+      const tempElement = document.createElement('textarea');
+      tempElement.value = text;
+      tempElement.style.position = 'fixed'; // Ensure it is off-screen
+      document.body.appendChild(tempElement);
+
+      // Select the text in the temporary element
+      tempElement.select();
+      tempElement.setSelectionRange(0, 99999); // For mobile devices
+
+      // Execute the copy command
+      document.execCommand('copy');
+
+      // Clean up and remove the temporary element
+      document.body.removeChild(tempElement);
+
+      // Show a message to the user (you can customize this message)
+      alert('Link copied!');
+    }
+
+    function mobileShare() {
+      navigator.share({
+        title: 'DinnerDate',
+        text: 'Click this link to make your picks!',
+        url: '{{ join_url }}',
+      });
+    };
+</script>
+
+
+{% endblock %}
